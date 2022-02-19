@@ -1,2 +1,2 @@
 # leetcode_by_xiaoqi2022
-2222222222
+123
