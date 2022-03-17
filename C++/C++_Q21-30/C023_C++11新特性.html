@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>C023_C++11新特性.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p>#C++ 11常用新特性快速一览
+##1. nullptr nullptr 出现的目的是为了替代 NULL。 在某种意义上来说，传统 C++ 会把 NULL、0 视为同一种东西，这取决于编译器如何定义 NULL，有些编译器会将 NULL 定义为((void *)0) ，有些则会直接将其定义为 0。 C++ 不允许直接将 void *隐式转换到其他类型，但如果 NULL 被定义为((void *)0) ，那么当编译char *ch = NULL;
+时，NULL 只好被定义为 0。 而这依然会产生问题，将导致了 C++ 中重载特性会发生混乱，考虑：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;
+``` 对于这两个函数来说，如果 <span class="hljs-literal">NULL</span> 又被定义为了 <span class="hljs-number">0</span> 那么 foo(<span class="hljs-literal">NULL</span>);
+这个语句将会去调用 foo(<span class="hljs-keyword">int</span>) ，从而导致代码违反直观。 为了解决这个问题，C++ <span class="hljs-number">11</span> 引入了 <span class="hljs-literal">nullptr</span> 关键字，专门用来区分空指针、<span class="hljs-number">0</span>。 <span class="hljs-literal">nullptr</span> 的类型为 <span class="hljs-keyword">nullptr_t</span>，能够隐式的转换为任何指针或成员指针的类型，也能和他们进行相等或者不等的比较。 当需要使用 <span class="hljs-literal">NULL</span> 时候，养成直接使用 <span class="hljs-literal">nullptr</span>的习惯。 ##<span class="hljs-number">2.</span> 类型推导
+    C++ <span class="hljs-number">11</span> 引入了 <span class="hljs-keyword">auto</span> 和 <span class="hljs-keyword">decltype</span> 这两个关键字实现了类型推导，让编译器来操心变量的类型。
+
+        **<span class="hljs-keyword">auto</span> **<span class="hljs-keyword">auto</span> 在很早以前就已经进入了 C++ ，但是他始终作为一个存储类型的指示符存在，与 <span class="hljs-keyword">register</span> 并存。在传统 C++ 中，如果一个变量没有声明为 <span class="hljs-keyword">register</span> 变量，将自动被视为一个 <span class="hljs-keyword">auto</span> 变量。而随着 <span class="hljs-keyword">register</span> 被弃用，对 <span class="hljs-keyword">auto</span> 的语义变更也就非常自然了。 使用 <span class="hljs-keyword">auto</span> 进行类型推导的一个最为常见而且显著的例子就是迭代器。在以前我们需要这样来书写一个迭代器：
+
+```<span class="hljs-function">cpp
+    <span class="hljs-title">for</span> <span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::const_iterator itr = vec.cbegin(); itr != vec.cend(); ++itr)</span>
+``` 而有了 <span class="hljs-keyword">auto</span> 之后可以：
+
+```cpp
+    <span class="hljs-comment">// 由于 cbegin() 将返回 vector&lt;int&gt;::const_iterator</span>
+    <span class="hljs-comment">// 所以 itr 也应该是 vector&lt;int&gt;::const_iterator 类型</span>
+    <span class="hljs-title">for</span> <span class="hljs-params">(<span class="hljs-keyword">auto</span> itr = vec.cbegin(); itr != vec.cend(); ++itr)</span></span>;
+</div></code></pre>
+<pre><code>一些其他的常见用法：
+</code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">auto</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">auto</span>(<span class="hljs-number">10</span>) <span class="hljs-comment">// arr 被推导为 int *</span>
+</div></code></pre>
+<pre><code>**注意：auto 不能用于函数传参，因此下面的做法是无法通过编译的（考虑重载的问题，我们应该使用模板）： **
+</code></pre>
+<pre class="hljs"><code><div>    add(<span class="hljs-keyword">auto</span> x, <span class="hljs-keyword">auto</span> y);
+</div></code></pre>
+<pre><code>**此外，auto 还不能用于推导数组类型： **
+</code></pre>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span>
+    <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">auto</span> i = <span class="hljs-number">5</span>;
+
+    <span class="hljs-keyword">int</span> arr[<span class="hljs-number">10</span>] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">auto</span> auto_arr = arr;
+    <span class="hljs-keyword">auto</span> auto_arr2[<span class="hljs-number">10</span>] = arr;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<pre><code>**decltype **decltype 关键字是为了解决 auto 关键字只能对变量进行类型推导的缺陷而出现的。它的用法和 sizeof 很相似：
+</code></pre>
+<pre class="hljs"><code><div>``` 在此过程中，编译器分析表达式并得到它的类型，却不实际计算表达式的值。 有时候，我们可能需要计算某个表达式的类型，例如：
+```cpp <span class="hljs-keyword">auto</span> x = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">auto</span> y = <span class="hljs-number">2</span>;
+<span class="hljs-keyword">decltype</span>(x + y) z;
+``` 拖尾返回类型、<span class="hljs-keyword">auto</span> 与 <span class="hljs-keyword">decltype</span> 配合
+    你可能会思考，<span class="hljs-keyword">auto</span> 能不能用于推导函数的返回类型。考虑这样一个例子加法函数的例子，在传统 C++ 中我们必须这么写：
+```cpp <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> R, <span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;
+    <span class="hljs-function">R <span class="hljs-title">add</span><span class="hljs-params">(T x, U y)</span>
+</span>{
+    <span class="hljs-keyword">return</span> x + y
+}
+``` 这样的代码其实变得很丑陋，因为程序员在使用这个模板函数的时候，必须明确指出返回类型。但事实上我们并不知道 add() 这个函数会做什么样的操作，获得一个什么样的返回类型。
+
+    在 C++ <span class="hljs-number">11</span> 中这个问题得到解决。虽然你可能马上回反应出来使用 <span class="hljs-keyword">decltype</span> 推导 x
+    + y 的类型，写出这样的代码：
+```cpp
+    <span class="hljs-keyword">decltype</span>(x + y) add(T x, U y);
+</div></code></pre>
+<pre><code>**但事实上这样的写法并不能通过编译。**
+    这是因为在编译器读到 decltype(x + y) 时，x 和 y 尚未被定义。为了解决这个问题，C++ 11 还引入了一个叫做拖尾返回类型（trailing return type），利用 auto 关键字将返回类型后置：
+</code></pre>
+<pre class="hljs"><code><div>        <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">add</span><span class="hljs-params">(T x, U y)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(x + y)</span>
+</span>{
+    <span class="hljs-keyword">return</span> x + y;
+}
+``` 从 C++ <span class="hljs-number">14</span> 开始是可以直接让普通函数具备返回值推导，因此下面的写法变得合法：
+```cpp <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;
+<span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">add</span><span class="hljs-params">(T x, U y)</span>
+</span>{
+    <span class="hljs-keyword">return</span> x + y;
+}
+</div></code></pre>
+<h2 id="3-%E5%8C%BA%E9%97%B4%E8%BF%AD%E4%BB%A3">3. 区间迭代</h2>
+<p>基于范围的 for 循环
+C++11 引入了基于范围的迭代写法，我们拥有了能够写出像 Python 一样简洁的循环语句。
+最常用的 std::vector 遍历将从原来的样子：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">arr</span><span class="hljs-params">(<span class="hljs-number">5</span>, <span class="hljs-number">100</span>)</span></span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator i = arr.begin(); i != arr.end(); ++i)
+{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+``` 变得非常的简单：
+```cpp
+    <span class="hljs-comment">// &amp; 启用了引用</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;i : arr)
+{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+``` ##<span class="hljs-number">4.</span> 初始化列表
+    C++ <span class="hljs-number">11</span> 提供了统一的语法来初始化任意的对象，例如：
+```cpp <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">A</span>
+{</span>
+    <span class="hljs-keyword">int</span> a;
+    <span class="hljs-keyword">float</span> b;
+};
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span>
+{</span>
+    B(<span class="hljs-keyword">int</span> _a, <span class="hljs-keyword">float</span> _b) : a(_a), b(_b) {}
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> a;
+    <span class="hljs-keyword">float</span> b;
+};
+</div></code></pre>
+<pre class="hljs"><code><div>    A a{<span class="hljs-number">1</span>, <span class="hljs-number">1.1</span>}; <span class="hljs-comment">// 统一的初始化语法</span>
+B b{<span class="hljs-number">2</span>, <span class="hljs-number">2.2</span>};
+</div></code></pre>
+<pre><code>C++ 11 还把初始化列表的概念绑定到了类型上，并将其称之为 std::initializer_list，允许构造函数或其他函数像参数一样使用初始化列表，这就为类对象的初始化与普通数组和 POD 的初始化方法提供了统一的桥梁，例如：
+</code></pre>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;initializer_list&gt;</span></span>
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Magic</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    Magic(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">initializer_list</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-built_in">list</span>) {}
+};
+
+Magic magic = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+``` ##<span class="hljs-number">5.</span> 模板增强
+    **外部模板 **
+        传统 C++ 中，模板只有在使用时才会被编译器实例化。只要在每个编译单元（文件）中编译的代码中遇到了被完整定义的模板，都会实例化。这就产生了重复实例化而导致的编译时间的增加。并且，我们没有办法通知编译器不要触发模板实例化。
+
+    C++ <span class="hljs-number">11</span> 引入了外部模板，扩充了原来的强制编译器在特定位置实例化模板的语法，使得能够显式的告诉编译器何时进行模板的实例化：
+```cpp <span class="hljs-keyword">template</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">std</span>:</span>:<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;;  <span class="hljs-comment">// 强行实例化</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">template</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">std</span>:</span>:<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt;; <span class="hljs-comment">// 不在该编译文件中实例化模板</span>
+</div></code></pre>
+<pre><code>    **尖括号 “&gt;”**
+        在传统 C++ 的编译器中， &gt;&gt;
+一律被当做右移运算符来进行处理。但实际上我们很容易就写出了嵌套模板的代码：
+</code></pre>
+<pre class="hljs"><code><div>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;
+            wow;
+</div></code></pre>
+<pre><code>这在传统C++ 编译器下是不能够被编译的，而 C++ 11 开始，连续的右尖括号将变得合法，并且能够顺利通过编译。
+
+    **类型别名模板 **
+        在传统 C++ 中，typedef 可以为类型定义一个新的名称，但是却没有办法为模板定义一个新的名称。因为，模板不是类型。例如：
+</code></pre>
+<pre class="hljs"><code><div>            <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuckType</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    T a;
+    U b;
+    SuckType() : a(value), b(value) {}
+};
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> U&gt;
+<span class="hljs-keyword">typedef</span> SuckType&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;, U, <span class="hljs-number">1</span>&gt; NewType; <span class="hljs-comment">// 不合法</span>
+``` C++ <span class="hljs-number">11</span> 使用 <span class="hljs-keyword">using</span> 引入了下面这种形式的写法，并且同时支持对传统 <span class="hljs-keyword">typedef</span> 相同的功效：
+```cpp <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-keyword">using</span> NewType = SuckType&lt;<span class="hljs-keyword">int</span>, T, <span class="hljs-number">1</span>&gt;; <span class="hljs-comment">// 合法</span>
+``` 默认模板参数
+    我们可能定义了一个加法函数：
+```cpp <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span> U&gt;
+    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">add</span><span class="hljs-params">(T x, U y)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(x + y)</span>
+</span>{
+    <span class="hljs-keyword">return</span> x + y
+}
+</div></code></pre>
+<pre><code>但在使用时发现，要使用 add，就必须每次都指定其模板参数的类型。 在 C++ 11 中提供了一种便利，可以指定模板的默认参数：
+</code></pre>
+<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">add</span><span class="hljs-params">(T x, U y)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(x + y)</span>
+</span>{
+    <span class="hljs-keyword">return</span> x + y;
+}
+``` ##<span class="hljs-number">6.</span> 构造函数
+    **委托构造 **
+        C++ <span class="hljs-number">11</span> 引入了委托构造的概念，这使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，从而达到简化代码的目的：
+```cpp <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">int</span> value1;
+    <span class="hljs-keyword">int</span> value2;
+    Base()
+    {
+        value1 = <span class="hljs-number">1</span>;
+    }
+    Base(<span class="hljs-keyword">int</span> value) : Base()
+    { <span class="hljs-comment">// 委托 Base() 构造函数</span>
+        value2 = <span class="hljs-number">2</span>;
+    }
+};
+</div></code></pre>
+<pre><code>**继承构造 **
+    在继承体系中，如果派生类想要使用基类的构造函数，需要在构造函数中显式声明。 假若基类拥有为数众多的不同版本的构造函数，这样，在派生类中得写很多对应的“透传”构造函数。如下：
+</code></pre>
+<pre class="hljs"><code><div>{
+    A(<span class="hljs-keyword">int</span> i) {}
+    A(<span class="hljs-keyword">double</span> d, <span class="hljs-keyword">int</span> i) {}
+    A(<span class="hljs-keyword">float</span> f, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *c) {}
+    <span class="hljs-comment">//...等等系列的构造函数版本</span>
+} ； <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span> :</span> A
+{
+    B(<span class="hljs-keyword">int</span> i) : A(i) {}
+    B(<span class="hljs-keyword">double</span> d, <span class="hljs-keyword">int</span> i) : A(d, i) {}
+    B(folat f, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *c) : A(f, i, e) {}
+    <span class="hljs-comment">//......等等好多个和基类构造函数对应的构造函数</span>
+} ；
+``` C++ <span class="hljs-number">11</span>的继承构造：
+```cpp <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">A</span>
+{</span>
+    A(<span class="hljs-keyword">int</span> i) {}
+    A(<span class="hljs-keyword">double</span> d, <span class="hljs-keyword">int</span> i) {}
+    A(<span class="hljs-keyword">float</span> f, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *c) {}
+    <span class="hljs-comment">//...等等系列的构造函数版本</span>
+} ； <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span> :</span> A
+{
+    <span class="hljs-keyword">using</span> A::A;
+    <span class="hljs-comment">//关于基类各构造函数的继承一句话搞定</span>
+    <span class="hljs-comment">//......</span>
+} ；
+``` 如果一个继承构造函数不被相关的代码使用，编译器不会为之产生真正的函数代码，这样比透传基类各种构造函数更加节省目标代码空间。
+
+    ##<span class="hljs-number">7.</span> Lambda 表达式
+        Lambda 表达式，实际上就是提供了一个类似匿名函数的特性，而匿名函数则是在需要一个函数，但是又不想费力去命名一个函数的情况下去使用的。
+
+    Lambda 表达式的基本语法如下：
+```cpp
+        [caputrue](params) opt-&gt;ret
+{
+    body;
+};
+</div></code></pre>
+<ol>
+<li>capture是捕获列表；</li>
+<li>params是参数表；(选填)</li>
+<li>opt是函数选项；可以填mutable,exception,attribute（选填）</li>
+</ol>
+<ul>
+<li>mutable说明lambda表达式体内的代码可以修改被捕获的变量，并且可以访问被捕获的对象的non-const方法。</li>
+<li>exception说明lambda表达式是否抛出异常以及何种异常。</li>
+<li>attribute用来声明属性。</li>
+</ul>
+<ol start="4">
+<li>ret是返回值类型（拖尾返回类型）。(选填)</li>
+<li>body是函数体。</li>
+</ol>
+<p>捕获列表：lambda表达式的捕获列表精细控制了lambda表达式能够访问的外部变量，以及如何访问这些变量。</p>
+<ol>
+<li>[]不捕获任何变量。</li>
+<li>[&amp;]捕获外部作用域中所有变量，并作为引用在函数体中使用（按引用捕获）。</li>
+<li>[=]捕获外部作用域中所有变量，并作为副本在函数体中使用(按值捕获)。注意值捕获的前提是变量可以拷贝，且被捕获的变量在 lambda 表达式被创建时拷贝，而非调用时才拷贝。如果希望lambda表达式在调用时能即时访问外部变量，我们应当使用引用方式捕获。</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">auto</span> f = [=]
+{ <span class="hljs-keyword">return</span> a; };
+a += <span class="hljs-number">1</span>;
+<span class="hljs-built_in">cout</span> &lt;&lt; f() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">//输出0</span>
+<span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">auto</span> f = [&amp;a]
+{ <span class="hljs-keyword">return</span> a; };
+a += <span class="hljs-number">1</span>;
+<span class="hljs-built_in">cout</span> &lt;&lt; f() &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">//输出1</span>
+</div></code></pre>
+<ol start="4">
+<li>[=,&amp;foo]按值捕获外部作用域中所有变量，并按引用捕获foo变量。</li>
+<li>[bar]按值捕获bar变量，同时不捕获其他变量。</li>
+<li>[this]捕获当前类中的this指针，让lambda表达式拥有和当前类成员函数同样的访问权限。如果已经使用了&amp;或者=，就默认添加此选项。捕获this的目的是可以在lamda中使用当前类的成员函数和成员变量。</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">int</span> i_ = <span class="hljs-number">0</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span>
+    </span>{
+        <span class="hljs-keyword">auto</span> x1 = []
+        { <span class="hljs-keyword">return</span> i_; }; <span class="hljs-comment">//error,没有捕获外部变量</span>
+        <span class="hljs-keyword">auto</span> x2 = [=]
+        { <span class="hljs-keyword">return</span> i_ + x + y; }; <span class="hljs-comment">//OK</span>
+        <span class="hljs-keyword">auto</span> x3 = [&amp;]
+        { <span class="hljs-keyword">return</span> i_ + x + y; }; <span class="hljs-comment">//OK</span>
+        <span class="hljs-keyword">auto</span> x4 = [<span class="hljs-keyword">this</span>]
+        { <span class="hljs-keyword">return</span> i_; }; <span class="hljs-comment">//OK</span>
+        <span class="hljs-keyword">auto</span> x5 = [<span class="hljs-keyword">this</span>]
+        { <span class="hljs-keyword">return</span> i_ + x + y; }; <span class="hljs-comment">//error,没有捕获x,y</span>
+        <span class="hljs-keyword">auto</span> x6 = [<span class="hljs-keyword">this</span>, x, y]
+        { <span class="hljs-keyword">return</span> i_ + x + y; }; <span class="hljs-comment">//OK</span>
+        <span class="hljs-keyword">auto</span> x7 = [<span class="hljs-keyword">this</span>]
+        { <span class="hljs-keyword">return</span> i_++; }; <span class="hljs-comment">//OK</span>
+    };
+
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">auto</span> f1 = []
+    { <span class="hljs-keyword">return</span> a; }; <span class="hljs-comment">//error,没有捕获外部变量</span>
+    <span class="hljs-keyword">auto</span> f2 = [&amp;]
+    { <span class="hljs-keyword">return</span> a++ }; <span class="hljs-comment">//OK</span>
+    <span class="hljs-keyword">auto</span> f3 = [=]
+    { <span class="hljs-keyword">return</span> a; }; <span class="hljs-comment">//OK</span>
+    <span class="hljs-keyword">auto</span> f4 = [=]
+    { <span class="hljs-keyword">return</span> a++; }; <span class="hljs-comment">//error,a是以复制方式捕获的，无法修改</span>
+    <span class="hljs-keyword">auto</span> f5 = [a]
+    { <span class="hljs-keyword">return</span> a + b; }; <span class="hljs-comment">//error,没有捕获变量b</span>
+    <span class="hljs-keyword">auto</span> f6 = [a, &amp;b]
+    { <span class="hljs-keyword">return</span> a + (b++); }; <span class="hljs-comment">//OK</span>
+    <span class="hljs-keyword">auto</span> f7 = [=, &amp;b]
+    { <span class="hljs-keyword">return</span> a + (b++); }; <span class="hljs-comment">//OK</span>
+    ``` 注意f4，虽然按值捕获的变量值均复制一份存储在lambda表达式变量中，修改他们也并不会真正影响到外部，但我们却仍然无法修改它们。如果希望去修改按值捕获的外部变量，需要显示指明lambda表达式为<span class="hljs-keyword">mutable</span>。被<span class="hljs-keyword">mutable</span>修饰的lambda表达式就算没有参数也要写明参数列表。
+
+        原因：lambda表达式可以说是就地定义仿函数闭包的“语法糖”。它的捕获列表捕获住的任何外部变量，最终会变为闭包类型的成员变量。按照C++ 标准，lambda表达式的<span class="hljs-keyword">operator</span>() 默认是<span class="hljs-keyword">const</span>的，一个<span class="hljs-keyword">const</span>成员函数是无法修改成员变量的值的。而<span class="hljs-keyword">mutable</span>的作用，就在于取消<span class="hljs-keyword">operator</span>() 的<span class="hljs-keyword">const</span>。
+```cpp
+        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">auto</span> f1 = [=]
+    { <span class="hljs-keyword">return</span> a++; }; <span class="hljs-comment">//error</span>
+    <span class="hljs-keyword">auto</span> f2 = [=]() <span class="hljs-keyword">mutable</span>
+    { <span class="hljs-keyword">return</span> a++; }; <span class="hljs-comment">//OK</span>
+    ``` lambda表达式的大致原理： <span class="hljs-number">1.</span> 每当你定义一个lambda表达式后，编译器会自动生成一个匿名类（这个类重载了() 运算符），我们称为闭包类型（closure type）。 <span class="hljs-number">2.</span> 那么在运行时，这个lambda表达式就会返回一个匿名的闭包实例，是一个右值。 <span class="hljs-number">3.</span> 所以，我们上面的lambda表达式的结果就是一个个闭包。对于复制传值捕捉方式，类中会相应添加对应类型的非静态数据成员。 <span class="hljs-number">4.</span> 在运行时，会用复制的值初始化这些成员变量，从而生成闭包。对于引用捕获方式，无论是否标记<span class="hljs-keyword">mutable</span>，都可以在lambda表达式中修改捕获的值。 <span class="hljs-number">5.</span> 至于闭包类中是否有对应成员，C++ 标准中给出的答案是：不清楚的，与具体实现有关。
+
+        lambda表达式是不能被赋值的：
+```cpp
+        <span class="hljs-keyword">auto</span> a = []
+    { <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"A"</span> &lt;&lt; <span class="hljs-built_in">endl</span>; };
+    <span class="hljs-keyword">auto</span> b = []
+    { <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"B"</span> &lt;&lt; <span class="hljs-built_in">endl</span>; };
+
+    a = b;      <span class="hljs-comment">// 非法，lambda无法赋值</span>
+    <span class="hljs-keyword">auto</span> c = a; <span class="hljs-comment">// 合法，生成一个副本</span>
+    ``` 闭包类型禁用了赋值操作符，但是没有禁用复制构造函数，所以你仍然可以用一个lambda表达式去初始化另外一个lambda表达式而产生副本。
+
+        在多种捕获方式中，最好不要使用[=] 和[&amp;] 默认捕获所有变量。
+
+        默认引用捕获所有变量，你有很大可能会出现悬挂引用（Dangling references），因为引用捕获不会延长引用的变量的生命周期：
+
+            <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">int</span>(<span class="hljs-keyword">int</span>)&gt;
+            add_x(<span class="hljs-keyword">int</span> x)
+    {
+        <span class="hljs-keyword">return</span> [&amp;](<span class="hljs-keyword">int</span> a)
+        { <span class="hljs-keyword">return</span> x + a; };
+    }
+    <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> 上面函数返回了一个lambda表达式，参数x仅是一个临时变量，函数add_x调用后就被销毁了，但是返回的lambda表达式却引用了该变量，当调用这个表达式时，引用的是一个垃圾值，会产生没有意义的结果。上面这种情况，使用默认传值方式可以避免悬挂引用问题。
+
+        但是采用默认值捕获所有变量仍然有风险，看下面的例子：
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Filter</span>
+    {</span>
+    <span class="hljs-keyword">public</span>:
+        Filter(<span class="hljs-keyword">int</span> divisorVal) : divisor{divisorVal}
+        {
+        }
+
+        <span class="hljs-function"><span class="hljs-built_in">std</span>::function&lt;<span class="hljs-title">bool</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span>&gt; <span class="hljs-title">getFilter</span><span class="hljs-params">()</span>
+        </span>{
+            <span class="hljs-keyword">return</span> [=](<span class="hljs-keyword">int</span> value)
+            { <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; };
+        }
+
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-keyword">int</span> divisor;
+    };
+
+    这个类中有一个成员方法，可以返回一个lambda表达式，这个表达式使用了类的数据成员divisor。而且采用默认值方式捕捉所有变量。你可能认为这个lambda表达式也捕捉了divisor的一份副本，但是实际上并没有。因为数据成员divisor对lambda表达式并不可见，你可以用下面的代码验证：
+
+        <span class="hljs-comment">// 类的方法，下面无法编译，因为divisor并不在lambda捕捉的范围</span>
+```<span class="hljs-function">cpp
+        <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-title">bool</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span>&gt;
+        <span class="hljs-title">getFilter</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> [divisor](<span class="hljs-keyword">int</span> value)
+        { <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; };
+    }
+    ``` 原代码中，lambda表达式实际上捕捉的是<span class="hljs-keyword">this</span>指针的副本，所以原来的代码等价于：
+```<span class="hljs-function">cpp
+        <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-title">bool</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span>&gt;
+        <span class="hljs-title">getFilter</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> [<span class="hljs-keyword">this</span>](<span class="hljs-keyword">int</span> value)
+        { <span class="hljs-keyword">return</span> value % <span class="hljs-keyword">this</span>-&gt;divisor == <span class="hljs-number">0</span>; };
+    }
+    ``` 尽管还是以值方式捕获，但是捕获的是指针，其实相当于以引用的方式捕获了当前类对象，所以lambda表达式的闭包与一个类对象绑定在一起了，这很危险，因为你仍然有可能在类对象析构后使用这个lambda表达式，那么类似“悬挂引用”的问题也会产生。所以，采用默认值捕捉所有变量仍然是不安全的，主要是由于指针变量的复制，实际上还是按引用传值。
+
+        lambda表达式可以赋值给对应类型的函数指针。但是使用函数指针并不是那么方便。所以STL定义在&lt;functional&gt;
+            头文件提供了一个多态的函数对象封装<span class="hljs-built_in">std</span>::function，其类似于函数指针。它可以绑定任何类函数对象，只要参数与返回类型相同。如下面的返回一个<span class="hljs-keyword">bool</span>且接收两个<span class="hljs-keyword">int</span>的函数包装器：
+```cpp
+                <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">bool</span>(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>)&gt;
+                    wrapper = [](<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)
+    { <span class="hljs-keyword">return</span> x &lt; y; };
+    ``` lambda表达式一个更重要的应用是其可以用于函数的参数，通过这种方式可以实现回调函数。
+
+        最常用的是在STL算法中，比如你要统计一个数组中满足特定条件的元素数量，通过lambda表达式给出条件，传递给count_if函数：
+``` <span class="hljs-keyword">int</span> value = <span class="hljs-number">3</span>;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v{<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>, <span class="hljs-number">10</span>};
+    <span class="hljs-keyword">int</span> count = <span class="hljs-built_in">std</span>::count_if(v.beigin(), v.end(), [value](<span class="hljs-keyword">int</span> x)
+                              { <span class="hljs-keyword">return</span> x &gt; value; });
+    ``` 再比如你想生成斐波那契数列，然后保存在数组中，此时你可以使用generate函数，并辅助lambda表达式：
+```<span class="hljs-function">cpp
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;
+            <span class="hljs-title">v</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> b = <span class="hljs-number">1</span>;
+    <span class="hljs-built_in">std</span>::generate(v.begin(), v.end(), [&amp;a, &amp;b]
+                  {
+                      <span class="hljs-keyword">int</span> value = b;
+                      b = b + a;
+                      a = value;
+                      <span class="hljs-keyword">return</span> value;
+                  });
+    <span class="hljs-comment">// 此时v {1, 1, 2, 3, 5, 8, 13, 21, 34, 55}</span>
+    ``` 当需要遍历容器并对每个元素进行操作时：
+```cpp
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;
+            v = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};
+    <span class="hljs-keyword">int</span> even_count = <span class="hljs-number">0</span>;
+    for_each(v.begin(), v.end(), [&amp;even_count](<span class="hljs-keyword">int</span> val)
+             {
+                 <span class="hljs-keyword">if</span> (!(val &amp; <span class="hljs-number">1</span>))
+                 {
+                     ++even_count;
+                 }
+             });
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"The number of even is "</span> &lt;&lt; even_count &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    ```
+
+        大部分STL算法，可以非常灵活地搭配lambda表达式来实现想要的效果。 ##<span class="hljs-number">8.</span> 新增容器## #<span class="hljs-number">1.</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span> 保存在 **栈内存 **中，相比 **堆内存 **中的 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>，我们能够灵活的访问这里面的元素，从而获得更高的性能。
+
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span> **会在编译时创建一个固定大小的数组 **，<span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span> **不能够被隐式的转换成指针 **，使用 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>只需指定其 **类型和大小 **即可：
+```cpp
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, 4&gt;
+                arr = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+
+    <span class="hljs-keyword">int</span> len = <span class="hljs-number">4</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, len&gt; arr = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>}; <span class="hljs-comment">// 非法, 数组大小参数必须是常量表达式</span>
+    ``` 当我们开始用上了 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span> 时，难免会遇到要将其兼容 C 风格的接口，这里有三种做法：
+```<span class="hljs-function">cpp <span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *p, <span class="hljs-keyword">int</span> len)</span>
+    </span>{
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span> 4&gt; arr = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+
+    <span class="hljs-comment">// C 风格接口传参</span>
+    <span class="hljs-comment">// foo(arr, arr.size());           // 非法, 无法隐式转换</span>
+    foo(&amp;arr[<span class="hljs-number">0</span>], arr.size());
+    foo(arr.data(), arr.size());
+
+    <span class="hljs-comment">// 使用 `std::sort`</span>
+    <span class="hljs-built_in">std</span>::sort(arr.begin(), arr.end());
+    ``` ## #<span class="hljs-number">2.</span> <span class="hljs-built_in">std</span>::forward_list
+            <span class="hljs-built_in">std</span>::forward_list 是一个列表容器，使用方法和 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">list</span> 基本类似。 和 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">list</span> 的双向链表的实现不同，<span class="hljs-built_in">std</span>::forward_list 使用单向链表进行实现，提供了 O(<span class="hljs-number">1</span>) 复杂度的元素插入，不支持快速随机访问（这也是链表的特点），也是标准库容器中唯一一个不提供 size() 方法的容器。当不需要双向迭代时，具有比 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">list</span> 更高的空间利用率。
+
+        ## #<span class="hljs-number">3.</span> 无序容器
+        C++ <span class="hljs-number">11</span> 引入了两组无序容器：
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_map</span>
+        / <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_multimap</span> 和 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_set</span> / <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_multiset</span>。
+
+        无序容器中的元素是不进行排序的，内部通过 Hash 表实现，插入和搜索元素的平均复杂度为 O(constant)。
+
+        ## #<span class="hljs-number">4.</span> 元组 <span class="hljs-built_in">std</span>::tuple 元组的使用有三个核心的函数：
+
+        <span class="hljs-built_in">std</span>::make_tuple : 构造元组 <span class="hljs-built_in">std</span>::get : 获得元组某个位置的值 <span class="hljs-built_in">std</span>::tie : 元组拆包
+```cpp
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tuple&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+                                                                              <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">get_student</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span>
+    </span>{
+        <span class="hljs-comment">// 返回类型被推断为 std::tuple&lt;double, char, std::string&gt;</span>
+        <span class="hljs-keyword">if</span> (id == <span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_tuple(<span class="hljs-number">3.8</span>, <span class="hljs-string">'A'</span>, <span class="hljs-string">"张三"</span>);
+        <span class="hljs-keyword">if</span> (id == <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_tuple(<span class="hljs-number">2.9</span>, <span class="hljs-string">'C'</span>, <span class="hljs-string">"李四"</span>);
+        <span class="hljs-keyword">if</span> (id == <span class="hljs-number">2</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_tuple(<span class="hljs-number">1.7</span>, <span class="hljs-string">'D'</span>, <span class="hljs-string">"王五"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_tuple(<span class="hljs-number">0.0</span>, <span class="hljs-string">'D'</span>, <span class="hljs-string">"null"</span>);
+        <span class="hljs-comment">// 如果只写 0 会出现推断错误, 编译失败</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">auto</span> student = get_student(<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"ID: 0, "</span>
+                  &lt;&lt; <span class="hljs-string">"GPA: "</span> &lt;&lt; <span class="hljs-built_in">std</span>::get&lt;<span class="hljs-number">0</span>&gt;(student) &lt;&lt; <span class="hljs-string">", "</span>
+                  &lt;&lt; <span class="hljs-string">"成绩: "</span> &lt;&lt; <span class="hljs-built_in">std</span>::get&lt;<span class="hljs-number">1</span>&gt;(student) &lt;&lt; <span class="hljs-string">", "</span>
+                  &lt;&lt; <span class="hljs-string">"姓名: "</span> &lt;&lt; <span class="hljs-built_in">std</span>::get&lt;<span class="hljs-number">2</span>&gt;(student) &lt;&lt; <span class="hljs-string">'\n'</span>;
+
+        <span class="hljs-keyword">double</span> gpa;
+        <span class="hljs-keyword">char</span> grade;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> name;
+
+        <span class="hljs-comment">// 元组进行拆包</span>
+        <span class="hljs-built_in">std</span>::tie(gpa, grade, name) = get_student(<span class="hljs-number">1</span>);
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"ID: 1, "</span>
+                  &lt;&lt; <span class="hljs-string">"GPA: "</span> &lt;&lt; gpa &lt;&lt; <span class="hljs-string">", "</span>
+                  &lt;&lt; <span class="hljs-string">"成绩: "</span> &lt;&lt; grade &lt;&lt; <span class="hljs-string">", "</span>
+                  &lt;&lt; <span class="hljs-string">"姓名: "</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">'\n'</span>;
+        ``` 合并两个元组，可以通过 <span class="hljs-built_in">std</span>::tuple_cat 来实现。
+``` <span class="hljs-keyword">auto</span> new_tuple = <span class="hljs-built_in">std</span>::tuple_cat(get_student(<span class="hljs-number">1</span>), <span class="hljs-built_in">std</span>::move(t));
+</div></code></pre>
+<h2 id="9-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">9. 正则表达式</h2>
+<p>正则表达式描述了一种字符串匹配的模式。一般使用正则表达式主要是实现下面三个需求：</p>
+<ol>
+<li>检查一个串是否包含某种形式的子串；</li>
+<li>将匹配的子串替换；</li>
+<li>从某个串中取出符合条件的子串。</li>
+</ol>
+<p>C++11 提供的正则表达式库操作 std::string 对象，对模式 std::regex (本质是 std::basic_regex)进行初始化，通过 std::regex_match 进行匹配，从而产生 std::smatch （本质是 std::match_results 对象）。</p>
+<p>我们通过一个简单的例子来简单介绍这个库的使用。考虑下面的正则表达式：</p>
+<p>[a-z]+.txt: 在这个正则表达式中, [a-z] 表示匹配一个小写字母, + 可以使前面的表达式匹配多次，因此 [a-z]+ 能够匹配一个及以上小写字母组成的字符串。在正则表达式中一个 . 表示匹配任意字符，而 . 转义后则表示匹配字符 . ，最后的 txt 表示严格匹配 txt 这三个字母。因此这个正则表达式的所要匹配的内容就是文件名为纯小写字母的文本文件。
+std::regex_match 用于匹配字符串和正则表达式，有很多不同的重载形式。最简单的一个形式就是传入std::string 以及一个 std::regex 进行匹配，当匹配成功时，会返回 true，否则返回 false。例如：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;regex&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> fnames[] = {<span class="hljs-string">"foo.txt"</span>, <span class="hljs-string">"bar.txt"</span>, <span class="hljs-string">"test"</span>, <span class="hljs-string">"a0.txt"</span>, <span class="hljs-string">"AAA.txt"</span>};
+    <span class="hljs-comment">// 在 C++ 中 `\` 会被作为字符串内的转义符，为使 `\.` 作为正则表达式传递进去生效，需要对 `\` 进行二次转义，从而有 `\\.`</span>
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::regex <span class="hljs-title">txt_regex</span><span class="hljs-params">(<span class="hljs-string">"[a-z]+\\.txt"</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> &amp;fname : fnames)
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; fname &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; <span class="hljs-built_in">std</span>::regex_match(fname, txt_regex) &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+``` 另一种常用的形式就是依次传入 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> / <span class="hljs-built_in">std</span>::smatch / <span class="hljs-built_in">std</span>::regex 三个参数，其中 <span class="hljs-built_in">std</span>::smatch 的本质其实是 <span class="hljs-built_in">std</span>::match_results，在标准库中， <span class="hljs-built_in">std</span>::smatch 被定义为了 <span class="hljs-built_in">std</span>::match_results，也就是一个子串迭代器类型的 match_results。使用 <span class="hljs-built_in">std</span>::smatch 可以方便的对匹配的结果进行获取，例如：
+```<span class="hljs-function">cpp <span class="hljs-built_in">std</span>::regex <span class="hljs-title">base_regex</span><span class="hljs-params">(<span class="hljs-string">"([a-z]+)\\.txt"</span>)</span></span>;
+<span class="hljs-built_in">std</span>::smatch base_match;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> &amp;fname : fnames)
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">std</span>::regex_match(fname, base_match, base_regex))
+    {
+        <span class="hljs-comment">// sub_match 的第一个元素匹配整个字符串</span>
+        <span class="hljs-comment">// sub_match 的第二个元素匹配了第一个括号表达式</span>
+        <span class="hljs-keyword">if</span> (base_match.size() == <span class="hljs-number">2</span>)
+        {
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> base = base_match[<span class="hljs-number">1</span>].str();
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"sub-match[0]: "</span> &lt;&lt; base_match[<span class="hljs-number">0</span>].str() &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; fname &lt;&lt; <span class="hljs-string">" sub-match[1]: "</span> &lt;&lt; base &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+        }
+    }
+}
+``` 以上两个代码段的输出结果为：
+``` foo.txt : <span class="hljs-number">1</span> bar.txt : <span class="hljs-number">1</span> test : <span class="hljs-number">0</span> a0.txt : <span class="hljs-number">0</span> AAA.txt : <span class="hljs-number">0</span> sub - match[<span class="hljs-number">0</span>] : foo.txt foo.txt sub - match[<span class="hljs-number">1</span>] : foo sub - match[<span class="hljs-number">0</span>] : bar.txt bar.txt sub - match[<span class="hljs-number">1</span>] : bar
+``` ##<span class="hljs-number">10.</span> 语言级线程支持 <span class="hljs-built_in">std</span>::thread <span class="hljs-built_in">std</span>::mutex / <span class="hljs-built_in">std</span>::unique_lock <span class="hljs-built_in">std</span>::<span class="hljs-built_in">future</span> / <span class="hljs-built_in">std</span>::packaged_task <span class="hljs-built_in">std</span>::condition_variable
+
+                                                                                                                                                                         代码编译需要使用 -
+                                                                                                               pthread 选项
+
+                                                                                                               ##<span class="hljs-number">11.</span> 右值引用和move语义## #右值引用 先看一个简单的例子直观感受下：
+```<span class="hljs-function">cpp
+                                                                                                                   <span class="hljs-built_in">string</span> <span class="hljs-title">a</span><span class="hljs-params">(x)</span></span>; <span class="hljs-comment">// line 1</span>
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">b</span><span class="hljs-params">(x + y)</span></span>;                                                                                                                <span class="hljs-comment">// line 2</span>
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">c</span><span class="hljs-params">(some_function_returning_a_string())</span></span>;                                                                                   <span class="hljs-comment">// line 3</span>
+``` 如果使用以下拷贝构造函数：
+```<span class="hljs-function">cpp
+<span class="hljs-title">string</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> &amp;that)</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> size = <span class="hljs-built_in">strlen</span>(that.data) + <span class="hljs-number">1</span>;
+    data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[size];
+    <span class="hljs-built_in">memcpy</span>(data, that.data, size);
+}
+``` 以上<span class="hljs-number">3</span>行中，只有第一行(line <span class="hljs-number">1</span>) 的x深度拷贝是有必要的，因为我们可能会在后边用到x，x是一个左值(lvalues)。
+
+    第二行和第三行的参数则是右值，因为表达式产生的<span class="hljs-built_in">string</span>对象是匿名对象，之后没有办法再使用了。
+
+    C++ <span class="hljs-number">11</span>引入了一种新的机制叫做“**右值引用 **”，以便我们通过重载直接使用右值参数。我们所要做的就是写一个以右值引用为参数的构造函数：
+```<span class="hljs-function">cpp
+        <span class="hljs-title">string</span><span class="hljs-params">(<span class="hljs-built_in">string</span> &amp;&amp; that)</span> <span class="hljs-comment">// string&amp;&amp; is an rvalue reference to a string</span>
+</span>{
+    data = that.data;
+    that.data = <span class="hljs-number">0</span>;
+}
+``` 我们没有深度拷贝堆内存中的数据，而是仅仅复制了指针，并把源对象的指针置空。事实上， **我们“偷取”了属于源对象的内存数据 **。由于源对象是一个右值，不会再被使用，因此客户并不会觉察到源对象被改变了。在这里， **我们并没有真正的复制 **，所以我们把这个构造函数叫做“**转移构造函数 **”（move constructor） **，他的工作就是把资源从一个对象转移到另一个对象，而不是复制他们。**
+
+    有了右值引用，再来看看赋值操作符：
+```cpp
+        <span class="hljs-built_in">string</span> &amp;
+        <span class="hljs-keyword">operator</span>=(<span class="hljs-built_in">string</span> that)
+{
+    <span class="hljs-built_in">std</span>::swap(data, that.data);
+    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+}
+``` 注意到我们是直接对参数that传值，所以that会像其他任何对象一样被初始化，那么确切的说，that是怎样被初始化的呢？对于C++ <span class="hljs-number">98</span>，答案是复制构造函数， **但是对于C++ <span class="hljs-number">11</span>，编译器会依据参数是左值还是右值在复制构造函数和转移构造函数间进行选择。**
+
+    如果是a = b，这样就会调用复制构造函数来初始化that（因为b是左值），赋值操作符会与新创建的对象交换数据，深度拷贝。这就是copy <span class="hljs-keyword">and</span> swap 惯用法的定义：构造一个副本，与副本交换数据，并让副本在作用域内自动销毁。这里也一样。
+
+    如果是a = x + y，这样就会调用转移构造函数来初始化that（因为x + y是右值），所以这里没有深度拷贝，只有高效的数据转移。相对于参数，that依然是一个独立的对象，但是他的构造函数是无用的（trivial），因此堆中的数据没有必要复制，而仅仅是转移。没有必要复制他，因为x + y是右值，再次，从右值指向的对象中转移是没有问题的。
+
+                                                                                                                                                                                                                                                                         * *总结一下：复制构造函数执行的是深度拷贝，因为源对象本身必须不能被改变。而转移构造函数却可以复制指针，把源对象的指针置空，这种形式下，这是安全的，因为用户不可能再使用这个对象了。* *
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                              下面我们进一步讨论右值引用和move语义。
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                              C++ <span class="hljs-number">98</span>标准库中提供了一种唯一拥有性的智能指针<span class="hljs-built_in">std</span> ::<span class="hljs-built_in">auto_ptr</span>，该类型在C++ <span class="hljs-number">11</span>中已被废弃，因为其“复制”行为是危险的。
+
+```cpp <span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                  a(<span class="hljs-keyword">new</span> Triangle);
+<span class="hljs-function"><span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt; <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>;
+</div></code></pre>
+<pre><code>注意b是怎样使用a进行初始化的，它不复制triangle，而是把triangle的所有权从a传递给了b，也可以说成“a 被转移进了b”或者“triangle被从a转移到了b”。
+
+auto_ptr 的复制构造函数可能看起来像这样（简化）：
+</code></pre>
+<pre class="hljs"><code><div>        <span class="hljs-built_in">auto_ptr</span>(<span class="hljs-built_in">auto_ptr</span> &amp; source) <span class="hljs-comment">// note the missing const</span>
+{
+    p = source.p;
+    source.p = <span class="hljs-number">0</span>; <span class="hljs-comment">// now the source no longer owns the object</span>
+}
+</div></code></pre>
+<pre><code>**auto_ptr 的危险之处在于看上去应该是复制，但实际上确是转移。调用被转移过的auto_ptr 的成员函数将会导致不可预知的后果。所以你必须非常谨慎的使用auto_ptr ，如果他被转移过。**
+</code></pre>
+<pre class="hljs"><code><div>        <span class="hljs-function"><span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt;
+        <span class="hljs-title">make_triangle</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt;(<span class="hljs-keyword">new</span> Triangle);
+}
+
+<span class="hljs-function"><span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt; <span class="hljs-title">c</span><span class="hljs-params">(make_triangle())</span></span>;    <span class="hljs-comment">// move temporary into c</span>
+<span class="hljs-keyword">double</span> area = make_triangle()-&gt;area(); <span class="hljs-comment">// perfectly safe</span>
+
+<span class="hljs-function"><span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt; <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-keyword">new</span> Triangle)</span></span>; <span class="hljs-comment">// create triangle</span>
+<span class="hljs-function"><span class="hljs-built_in">auto_ptr</span>&lt;Shape&gt; <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>;            <span class="hljs-comment">// move a into b</span>
+<span class="hljs-keyword">double</span> area = a-&gt;area();         <span class="hljs-comment">// undefined behavior</span>
+``` 显然，在持有<span class="hljs-built_in">auto_ptr</span> 对象的a表达式和持有调用函数返回的<span class="hljs-built_in">auto_ptr</span>值类型的make_triangle() 表达式之间一定有一些潜在的区别，每调用一次后者就会创建一个新的<span class="hljs-built_in">auto_ptr</span>对象。这里a 其实就是一个左值（lvalue）的例子，而make_triangle() 就是右值（rvalue）的例子。
+
+    转移像a这样的左值是非常危险的，因为我们可能调用a的成员函数，这会导致不可预知的行为。另一方面，转移像make_triangle() 这样的右值却是非常安全的，因为复制构造函数之后，我们不能再使用这个临时对象了，因为这个转移后的临时对象会在下一行之前销毁掉。
+
+    我们现在知道转移左值是十分危险的，但是转移右值却是很安全的。如果C++ 能从语言级别支持区分左值和右值参数，我就可以完全杜绝对左值转移，或者把转移左值在调用的时候暴露出来，以使我们不会不经意的转移左值。
+
+        **C++ <span class="hljs-number">11</span>对这个问题的答案是右值引用。右值引用是针对右值的新的引用类型，语法是X &amp;&amp;。以前的老的引用类型X &amp;现在被称作左值引用。**
+
+            **使用右值引用X &amp;&amp;作为参数的最有用的函数之一就是转移构造函数X::X(X &amp;&amp; source) ，它的主要作用是把源对象的本地资源转移给当前对象。**
+
+                C++ <span class="hljs-number">11</span>中，`<span class="hljs-built_in">std</span>::<span class="hljs-built_in">auto_ptr</span>&lt;T&gt;`已经被`<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;T&gt;`所取代，后者就是利用的右值引用。
+
+    其转移构造函数：
+```<span class="hljs-function">cpp
+        <span class="hljs-title">unique_ptr</span><span class="hljs-params">(<span class="hljs-built_in">unique_ptr</span> &amp;&amp; source)</span> <span class="hljs-comment">// note the rvalue reference</span>
+</span>{
+    ptr = source.ptr;
+    source.ptr = <span class="hljs-literal">nullptr</span>;
+}
+``` 这个转移构造函数跟<span class="hljs-built_in">auto_ptr</span>中复制构造函数做的事情一样，但是它却只能接受右值作为参数。
+```<span class="hljs-function">cpp
+    <span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt;
+        <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-keyword">new</span> Triangle)</span></span>;
+<span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>;               <span class="hljs-comment">// error</span>
+<span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; <span class="hljs-title">c</span><span class="hljs-params">(make_triangle())</span></span>; <span class="hljs-comment">// okay</span>
+``` 第二行不能编译通过，因为a是左值，但是参数<span class="hljs-built_in">unique_ptr</span> &amp;&amp;source只能接受右值，这正是我们所需要的，杜绝危险的隐式转移。第三行编译没有问题，因为make_triangle() 是右值，转移构造函数会将临时对象的所有权转移给对象c，这正是我们需要的。
+
+    ## #转移左值 &amp;&amp;move语义
+        有时候，我们可能想转移左值，也就是说，有时候我们想让编译器把左值当作右值对待，以便能使用转移构造函数，即便这有点不安全。出于这个目的，C++ <span class="hljs-number">11</span>在标准库的头文件 &lt; utility &gt; 中提供了一个模板函数 **<span class="hljs-built_in">std</span>::move **。实际上， **<span class="hljs-built_in">std</span>::move仅仅是简单地将左值转换为右值，它本身并没有转移任何东西。它仅仅是让对象可以转移。**
+
+                                                                                                                                                                                     以下是如何正确的转移左值：
+```<span class="hljs-function">cpp
+                                                                                                                                                                                         <span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt;
+                                                                                                                                                                                             <span class="hljs-title">a</span><span class="hljs-params">(<span class="hljs-keyword">new</span> Triangle)</span></span>;
+<span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>;            <span class="hljs-comment">// still an error</span>
+<span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::move(a))</span></span>; <span class="hljs-comment">// okay</span>
+``` 请注意，第三行之后，a不再拥有Triangle对象。不过这没有关系，因为通过明确的写出<span class="hljs-built_in">std</span>::move(a) ，我们很清楚我们的意图：亲爱的转移构造函数，你可以对a做任何想要做的事情来初始化c；我不再需要a了，对于a，您请自便。
+
+    当然，如果你在使用了mova(a) 之后，还继续使用a，那无疑是搬起石头砸自己的脚，还是会导致严重的运行错误。
+
+        **总之，<span class="hljs-built_in">std</span>::move(some_lvalue) 将左值转换为右值（可以理解为一种类型转换），使接下来的转移成为可能。**
+
+            一个例子：
+```cpp <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
+{</span>
+    <span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; member;
+
+<span class="hljs-keyword">public</span>:
+    Foo(<span class="hljs-built_in">unique_ptr</span>&lt;Shape&gt; &amp;&amp;parameter)
+        : member(parameter) <span class="hljs-comment">// error</span>
+    {
+    }
+};
+</div></code></pre>
+<p>上面的parameter，其类型是一个右值引用，只能说明parameter是指向右值的引用，而parameter本身是个左值。（Things that are declared as rvalue reference can be lvalues or rvalues. The distinguishing criterion is: if it has a name, then it is an lvalue. Otherwise, it is an rvalue.）</p>
+<p>因此以上对parameter的转移是不允许的，需要使用std::move来显示转换成右值。
+参考资料：<a href="https://blog.csdn.net/jiange_zh/article/details/79356417">C++11常用新特性快速一览_jiange_zh的博客-CSDN博客_c++11新特性</a></p>
+<h2 id="%E6%80%BB%E7%BB%93">总结：</h2>
+<ol>
+<li>nullptr代替有二义性的NULL代表空指针</li>
+<li>C++11 引入了 auto (对变量)和 decltype(对表达式) 这两个关键字实现了类型推导，让编译器来操心变量的类型。</li>
+<li>引入了区间迭代 <code>for(auto &amp;i : arr) {          std::cout &lt;&lt; i &lt;&lt; std::endl; }</code></li>
+<li>初始化列表，C++11 提供了统一的语法来初始化任意的对象，<code>B(int _a, float _b): a(_a), b(_b) {}</code>,C++11 还把初始化列表的概念绑定到了类型上,并将其称之为 std::initializer_list，允许构造函数或其他函数像参数一样使用初始化列表，这就为类对象的初始化与普通数组和 POD 的初始化方法提供了统一的桥梁</li>
+<li>模板增强，引入了<strong>外部模板</strong>，扩充了原来的强制编译器在特定位置实例化模板的语法，使得能够显式的告诉编译器何时进行模板的实例化，减少编译时间；<strong>多个尖括号合法,</strong> <strong>类型别名模板</strong>，在传统 C++中，typedef 可以为类型定义一个新的名称，但是却没有办法为模板定义一个新的名称。因为，模板不是类型。新特性中可以实现。</li>
+<li>C++11引入了委托构造的概念，这使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，从而达到简化代码的目的;还引入了继承构造</li>
+<li>lambda表达式，类似一个匿名函数;大部分STL算法，可以非常灵活地搭配lambda表达式来实现想要的效果。</li>
+<li>新增容器,std::array保存在栈内存中，相比堆内存中的std::vector，访问更灵活，性能更高，std::array 会在编译时创建一个固定大小的数组，std::array 不能够被隐式的转换成指针，使用 std::array只需指定其类型和大小即可;std::forward_list 是一个列表容器，使用方法和 std::list 基本类似。实现使用单向链表，list使用双向链表，提供O(1)的复杂度元素插入，不支持快速随机访问，不提供size()方法，当不需要双向迭代时，具有比std::list更高的空间利用率;无序容器，std::unordered_map/std::unordered_multimap 和std::unordered_set/std::unordered_multiset。元素不进行排序，内部通过hash表实现，插入和搜索元素的平均复杂度为O(n);元组tuple</li>
+<li>正则表达式,检查一个串是否包含某种形式的子串;将匹配的子串替换;从某个串中取出符合条件的子串。</li>
+<li>语言级线程支持，代码编译需要使用 -pthread 选项</li>
+<li>右值引用和MOVE语义，拷贝构造函数分为复制构造函数和转移构造函数，转移构造函数没有深度拷贝堆内存中的数据，而是仅仅复制了指针，并把源对象的指针置空。由于源对象是一个右值，不会再被使用，因此客户并不会觉察到源对象被改变了。在这里，我们并没有真正的复制，所以我们把这个构造函数叫做“转移构造函数”（move constructor），他的工作就是把资源从一个对象转移到另一个对象，而不是复制他们。C++新特性中，<strong>对于C++ 11，编译器会依据参数是左值还是右值在复制构造函数和转移构造函数间进行选择</strong>。总结来说，<strong>复制构造函数执行的是深度拷贝，因为源对象本身必须不能被改变。而转移构造函数却可以复制指针，把源对象的指针置空，这种形式下，这是安全的，因为用户不可能再使用这个对象了</strong>。旧的auto_ptr指针存在将左值进行看起来是复制实际是转移的操作，容易引起未知的后果。已知，转移左值是十分危险的，但是转移右值却是很安全的。C++11考虑进行右值引用，auto_ptr也变成了unique_ptr,unique_ptr使用的就是右值引用，它和auto_ptr很像，但是只接受右值作为参数。那要想转移左值，就需要用到函数move(),将左值转化为右值，让左值对象变成可转移的右值对象。之后被move转移的对象不能够再使用。</li>
+</ol>
+
+</body>
+</html>
